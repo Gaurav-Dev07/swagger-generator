@@ -3,6 +3,7 @@ import { SwaggerConfigRepository } from '../repositories/swagger-config.reposito
 import { ServiceEntity } from '../entities/service.entity';
 import { SwaggerExceptionHandler } from '../exceptions/swagger-exception-handler';
 import { ERROR_MESSAGES } from 'src/utils';
+import { SwaggerConfig } from '../entities/swagger-config.entity';
 
 @Injectable()
 export class SwaggerService {
@@ -24,13 +25,16 @@ export class SwaggerService {
       this.swaggerErrorHandler.handleSwaggerConfigNotFoundException();
     }
 
-    const swaggerConfiguration =
+    const swaggerConfiguration: SwaggerConfig | null =
       await this.swaggerConfigRepository.findByVersionAndService(
         version,
         serviceData?.id,
       );
 
-    return swaggerConfiguration;
+    if (!swaggerConfiguration) {
+      this.swaggerErrorHandler.handleSwaggerConfigNotFoundException();
+    }
+    return swaggerConfiguration?.configuration;
   }
 
   validateGetSwaggerConfigOrDocRequest(version: string, service: string) {
