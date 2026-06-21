@@ -1,6 +1,10 @@
 import { Controller, Get, Logger, Query, Res } from '@nestjs/common';
 import { SwaggerService } from '../providers/swagger.service';
-import { API_ROUTES, API_VERSION_1, SWAGGER_BASE_ROUTE } from 'src/utils/constants';
+import {
+  API_ROUTES,
+  API_VERSION_1,
+  SWAGGER_BASE_ROUTE,
+} from 'src/utils/constants';
 import { SwagggerDocumentService } from '../providers/swagger-document.service';
 import { Response } from 'express';
 
